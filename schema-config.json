@@ -1,0 +1,145 @@
+{
+    "homepage": {
+        "@type": "WebSite",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "{brand}",
+            "url": "{siteUrl}",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "{siteUrl}search?query={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    },
+    "service": {
+        "@type": "Service",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "name": "{title}",
+            "description": "{metaDescription}",
+            "provider": {
+                "@type": "ProfessionalService",
+                "name": "{brand}",
+                "url": "{siteUrl}",
+                "image": "{logoUrl}",
+                "@id": "{siteUrl}#professionalService"
+            },
+            "serviceType": "{serviceType}",
+            "@id": "{pageUrl}#{serviceId}"
+        }
+    },
+    "location": {
+        "@type": "Place",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "Place",
+            "name": "{brand} - Venice Location",
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "{streetAddress}",
+                "addressLocality": "{addressLocality}",
+                "addressRegion": "{addressRegion}",
+                "postalCode": "{postalCode}",
+                "addressCountry": "{addressCountry}"
+            },
+            "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": "{latitude}",
+                "longitude": "{longitude}"
+            },
+            "telephone": "{telephone}",
+            "openingHoursSpecification": [
+                {
+                    "@type": "OpeningHoursSpecification",
+                    "dayOfWeek": "{openingHoursDayOfWeek}",
+                    "opens": "{openingHoursOpens}",
+                    "closes": "{openingHoursCloses}"
+                }
+            ]
+        }
+    },
+    "about": {
+        "@type": "WebPage",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "name": "{title}",
+            "description": "{metaDescription}",
+            "url": "{pageUrl}",
+            "mainEntity": {
+                "@type": "Organization",
+                "name": "{brand}",
+                "description": "{metaDescription}",
+                "url": "{siteUrl}",
+                "logo": "{logoUrl}",
+                "sameAs": "{socialLinks}"
+            }
+        }
+    },
+    "article": {
+        "@type": "Article",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "Article",
+            "headline": "{title}",
+            "description": "{metaDescription}",
+            "datePublished": "{datePublished}",
+            "dateModified": "{dateModified}",
+            "author": {
+                "@type": "Organization",
+                "name": "{brand}"
+            },
+            "publisher": {
+                "@type": "Organization",
+                "name": "{brand}",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "{logoUrl}"
+                }
+            },
+            "url": "{pageUrl}"
+        }
+    },
+    "faq": {
+        "@type": "FAQPage",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": []
+        }
+    },
+    "howto": {
+        "@type": "HowTo",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "HowTo",
+            "name": "{title}",
+            "description": "{metaDescription}",
+            "step": []
+        }
+    },
+    "searchbox": {
+        "@type": "WebSite",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "url": "{siteUrl}",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "{siteUrl}search?query={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    },
+    "breadcrumb": {
+        "@type": "BreadcrumbList",
+        "template": {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": []
+        }
+    }
+}
