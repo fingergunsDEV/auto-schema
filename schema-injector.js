@@ -1,107 +1,112 @@
 (function() {
     // Default configuration
     const defaultConfig = {
-        configUrl: '/schema-config.json',
-        brand: 'Your Brand Name',
-        logoUrl: 'https://yourwebsite.com/logo.png',
-        siteUrl: window.location.origin,
+        configUrl: 'https://fingergunsdev.github.io/auto-schema/schema-config.json',
+        templateUrl: 'https://fingergunsdev.github.io/auto-schema/schema-templates.json',
+        brand: 'Holistic Growth Marketing',
+        logoUrl: 'https://cdn.prod.website-files.com/65db95957d65c02ae759f762/66fca6720ecaf4e682af0a99_blue%20logo%20new.avif',
+        siteUrl: 'https://www.holisticgrowthmarketing.com/',
         socialLinks: [
-            'https://www.facebook.com/yourbrand',
-            'https://www.twitter.com/yourbrand',
-            'https://www.linkedin.com/company/yourbrand'
+            'https://www.facebook.com/holisticgrowthmarketing',
+            'https://twitter.com/localseogrowth',
+            'https://www.linkedin.com/company/holistic-growth-marketing',
+            'https://www.instagram.com/holisticgrowthmarketingla',
+            'https://www.yelp.com/biz/holistic-growth-marketing-los-angeles',
+            'https://www.reddit.com/user/InstructionAny1236/',
+            'https://medium.com/@holisticgrowthmarketing',
+            'https://podcasters.spotify.com/pod/show/holisticgrowthmarketing',
+            'https://www.iheart.com/podcast/269-holistic-marketing-minute-255521927/'
         ],
         address: {
-            streetAddress: '123 Business St',
-            addressLocality: 'City',
-            addressRegion: 'State',
-            postalCode: '12345',
+            streetAddress: '215 Market St',
+            addressLocality: 'Venice',
+            addressRegion: 'CA',
+            postalCode: '90291',
             addressCountry: 'US'
         },
         geo: {
-            latitude: 40.7128,
-            longitude: -74.0060
+            latitude: 33.9869,
+            longitude: -118.4663
         },
-        category: 'Your Business Category',
-        telephone: '+1-123-456-7890',
-        openingHours: 'Mo-Fr 09:00-17:00',
-        faqSelectors: ['[class*="faq"] h2', '[class*="faq"] h3', '[id*="faq"] h2', '[id*="faq"] h3'],
-        templateUrl: '/schema-templates.json',
-        debug: false,
-        remoteLogUrl: null // e.g., 'https://your-logging-service.com/log'
+        telephone: '+1-323-902-1031',
+        openingHours: [
+            {
+                dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+                opens: '08:00',
+                closes: '17:00'
+            }
+        ],
+        description: 'Unlock the full potential of your business by combining holistic SEO with cutting-edge business intelligence automation, data analysis, brand storytelling, and targeted content marketing.',
+        areaServed: 'Global',
+        services: [
+            {
+                name: 'On-page SEO',
+                description: 'Optimize your website\'s content and structure for better search engine rankings.',
+                id: 'https://www.holisticgrowthmarketing.com/services/on-page-seo#onPageSEO'
+            },
+            {
+                name: 'Off-page SEO',
+                description: 'Build your online authority through quality backlinks and external signals.',
+                id: 'https://www.holisticgrowthmarketing.com/services/off-page-seo#offPageSEO'
+            },
+            {
+                name: 'Technical SEO',
+                description: 'Enhance the technical aspects of your website to improve its search engine performance.',
+                id: 'https://www.holisticgrowthmarketing.com/services/technical-seo#technicalSEO'
+            },
+            {
+                name: 'Keyword Research',
+                description: 'Identify the most valuable keywords for targeting in your SEO strategy.',
+                id: 'https://www.holisticgrowthmarketing.com/services/keyword-research#keywordResearch'
+            },
+            {
+                name: 'Web Design',
+                description: 'Create visually appealing and user-friendly website designs that engage visitors.',
+                id: 'https://www.holisticgrowthmarketing.com/services/web-design#webDesign'
+            },
+            {
+                name: 'Web Development',
+                description: 'Build responsive and high-performance websites tailored to your business needs.',
+                id: 'https://www.holisticgrowthmarketing.com/services/web-development#webDevelopment'
+            },
+            {
+                name: 'SEO Reporting',
+                description: 'Get detailed insights and analytics on your SEO performance.',
+                id: 'https://www.holisticgrowthmarketing.com/services/seo-reporting#seoReporting'
+            },
+            {
+                name: 'Trend Forecasting',
+                description: 'Anticipate market trends and adapt your SEO strategy for future success.',
+                id: 'https://www.holisticgrowthmarketing.com/services/trend-forecasting#trendForecasting'
+            },
+            {
+                name: 'Local SEO',
+                description: 'Optimize your online presence to attract local customers and improve local search rankings.',
+                id: 'https://www.holisticgrowthmarketing.com/services/local-seo#localSEO'
+            }
+        ],
+        faqSelectors: ['.faq-item h4', '.question'],
+        howToSelectors: ['.howto-step h3', '.step-title'],
+        breadcrumbSelectors: ['.breadcrumb-item a', '.w-breadcrumb a'],
+        debug: true,
+        remoteLogUrl: null
     };
 
     let config = defaultConfig;
 
-    // Default schema templates
-    const defaultSchemaTemplates = {
-        'pillar': {
-            '@type': 'WebPage',
-            template: {
-                '@context': 'https://schema.org',
-                '@type': 'WebPage',
-                'name': '{title}',
-                'description': '{metaDescription}',
-                'mainEntity': {
-                    '@type': 'Article',
-                    'headline': '{title}',
-                    'datePublished': '{datePublished}',
-                    'dateModified': '{dateModified}',
-                    'author': {
-                        '@type': 'Organization',
-                        'name': '{brand}'
-                    }
-                }
-            }
-        },
-        'article': {
-            '@type': 'Article',
-            template: {
-                '@context': 'https://schema.org',
-                '@type': 'Article',
-                'headline': '{title}',
-                'description': '{metaDescription}',
-                'datePublished': '{datePublished}',
-                'dateModified': '{dateModified}',
-                'author': {
-                    '@type': 'Organization',
-                    'name': '{brand}'
-                },
-                'publisher': {
-                    '@type': 'Organization',
-                    'name': '{brand}',
-                    'logo': {
-                        '@type': 'ImageObject',
-                        'url': '{logoUrl}'
-                    }
-                }
-            }
-        },
-        'faq': {
-            '@type': 'FAQPage',
-            template: {
-                '@context': 'https://schema.org',
-                '@type': 'FAQPage',
-                'mainEntity': []
-            }
-        }
-    };
+    // Schema templates loaded externally
+    let schemaMapping = {};
 
-    let schemaMapping = defaultSchemaTemplates;
-
-    // Hard-coded organization and local business schema
-    const organizationSchema = {
+    // ProfessionalService schema
+    const professionalServiceSchema = {
         '@context': 'https://schema.org',
-        '@type': 'Organization',
+        '@type': 'ProfessionalService',
         'name': '{brand}',
+        'description': '{description}',
+        'image': '{logoUrl}',
+        '@id': '{siteUrl}#professionalService',
         'url': '{siteUrl}',
-        'logo': '{logoUrl}',
-        'sameAs': [] // Populated from config.socialLinks
-    };
-
-    const localBusinessSchema = {
-        '@context': 'https://schema.org',
-        '@type': 'LocalBusiness',
-        'name': '{brand}',
+        'telephone': '{telephone}',
         'address': {
             '@type': 'PostalAddress',
             'streetAddress': '{streetAddress}',
@@ -110,14 +115,28 @@
             'postalCode': '{postalCode}',
             'addressCountry': '{addressCountry}'
         },
-        'geo': {
-            '@type': 'GeoCoordinates',
-            'latitude': '{latitude}',
-            'longitude': '{longitude}'
+        'openingHoursSpecification': [
+            {
+                '@type': 'OpeningHoursSpecification',
+                'dayOfWeek': '{openingHoursDayOfWeek}',
+                'opens': '{openingHoursOpens}',
+                'closes': '{openingHoursCloses}'
+            }
+        ],
+        'sameAs': [],
+        'areaServed': '{areaServed}',
+        'hasOfferCatalog': {
+            '@type': 'OfferCatalog',
+            'name': 'Marketing Services',
+            'itemListElement': []
         },
-        'category': '{category}',
-        'telephone': '{telephone}',
-        'openingHours': '{openingHours}'
+        'contactPoint': {
+            '@type': 'ContactPoint',
+            'telephone': '{telephone}',
+            'contactType': 'Customer Service',
+            'areaServed': '{areaServed}',
+            'availableLanguage': 'English'
+        }
     };
 
     // Utility to fetch external resources
@@ -152,7 +171,6 @@
         if (!schema['@context'] || !schema['@type']) {
             return false;
         }
-        // Add more validation rules as needed (e.g., required fields per type)
         return true;
     }
 
@@ -166,7 +184,7 @@
         }
     }
 
-    // Advanced page type detection with scoring
+    // Advanced page type detection
     function detectPageType() {
         const signals = [
             {
@@ -180,25 +198,55 @@
                 type: () => 'faq'
             },
             {
+                test: () => document.querySelector('[class*="howto"], [id*="howto"]') || document.body.innerText.toLowerCase().includes('step'),
+                weight: 0.8,
+                type: () => 'howto'
+            },
+            {
                 test: () => document.querySelector('article') || document.title.toLowerCase().includes('blog') || document.querySelector('meta[name="description"]')?.content.toLowerCase().includes('article'),
                 weight: 0.7,
                 type: () => 'article'
             },
             {
-                test: () => true, // Fallback
+                test: () => window.location.pathname.includes('/services/'),
+                weight: 0.9,
+                type: () => 'service'
+            },
+            {
+                test: () => window.location.pathname.includes('/location'),
+                weight: 0.9,
+                type: () => 'location'
+            },
+            {
+                test: () => window.location.pathname.includes('/about'),
+                weight: 0.9,
+                type: () => 'about'
+            },
+            {
+                test: () => window.location.pathname === '/' || window.location.pathname === '/index.html',
+                weight: 0.9,
+                type: () => 'homepage'
+            },
+            {
+                test: () => document.querySelector('.breadcrumb, .w-breadcrumb'),
+                weight: 0.6,
+                type: () => 'breadcrumb'
+            },
+            {
+                test: () => true,
                 weight: 0.1,
-                type: () => 'pillar'
+                type: () => 'homepage'
             }
         ];
 
         let highestScore = 0;
-        let detectedType = 'pillar';
+        let detectedType = 'homepage';
 
         signals.forEach(signal => {
             const result = signal.test();
-            if (result) {
+            if (result && schemaMapping[signal.type(result)]) {
                 const score = signal.weight;
-                if (score > highestScore && schemaMapping[signal.type(result)]) {
+                if (score > highestScore) {
                     highestScore = score;
                     detectedType = signal.type(result);
                 }
@@ -228,7 +276,7 @@
             }
         });
 
-        // Check for existing schema.org FAQ data
+        // Check for existing FAQ schema
         const existingSchemas = document.querySelectorAll('script[type="application/ld+json"]');
         existingSchemas.forEach(script => {
             try {
@@ -242,18 +290,64 @@
         return faqItems;
     }
 
+    // Extract HowTo steps
+    function extractHowToSteps() {
+        const steps = [];
+        const selectors = config.howToSelectors || [];
+        const elements = document.querySelectorAll(selectors.join(', '));
+
+        elements.forEach((step, index) => {
+            const description = step.nextElementSibling?.textContent.trim() || '';
+            if (description) {
+                steps.push({
+                    '@type': 'HowToStep',
+                    'name': step.textContent.trim(),
+                    'text': description,
+                    'position': index + 1
+                });
+            }
+        });
+
+        return steps;
+    }
+
+    // Extract Breadcrumbs
+    function extractBreadcrumbs() {
+        const breadcrumbs = [];
+        const selectors = config.breadcrumbSelectors || [];
+        const elements = document.querySelectorAll(selectors.join(', '));
+
+        elements.forEach((item, index) => {
+            const name = item.textContent.trim();
+            const url = item.href || '';
+            if (name && url) {
+                breadcrumbs.push({
+                    '@type': 'ListItem',
+                    'position': index + 1,
+                    'name': name,
+                    'item': url
+                });
+            }
+        });
+
+        return breadcrumbs;
+    }
+
     // Main function to generate and inject schema
     async function injectSchema() {
         try {
             // Gather page data
             const pageData = {
-                title: document.title || 'Untitled Page',
-                metaDescription: document.querySelector('meta[name="description"]')?.content || '',
+                title: document.title || 'Holistic Growth Marketing',
+                metaDescription: document.querySelector('meta[name="description"]')?.content || config.description,
                 datePublished: document.querySelector('meta[name="article:published_time"]')?.content || new Date().toISOString(),
                 dateModified: document.querySelector('meta[name="article:modified_time"]')?.content || new Date().toISOString(),
                 brand: config.brand,
                 siteUrl: config.siteUrl,
+                pageUrl: window.location.href,
                 logoUrl: config.logoUrl,
+                description: config.description,
+                telephone: config.telephone,
                 streetAddress: config.address.streetAddress,
                 addressLocality: config.address.addressLocality,
                 addressRegion: config.address.addressRegion,
@@ -261,9 +355,13 @@
                 addressCountry: config.address.addressCountry,
                 latitude: config.geo.latitude,
                 longitude: config.geo.longitude,
-                category: config.category,
-                telephone: config.telephone,
-                openingHours: config.openingHours
+                openingHoursDayOfWeek: JSON.stringify(config.openingHours[0].dayOfWeek),
+                openingHoursOpens: config.openingHours[0].opens,
+                openingHoursCloses: config.openingHours[0].closes,
+                areaServed: config.areaServed,
+                socialLinks: JSON.stringify(config.socialLinks),
+                serviceType: document.querySelector('meta[name="service-type"]')?.content || '',
+                serviceId: document.querySelector('meta[name="service-id"]')?.content || window.location.hash || 'service'
             };
 
             // Detect page type
@@ -275,18 +373,36 @@
                 return;
             }
 
-            // Handle FAQ page specifically
+            // Handle specific page types
             if (pageType === 'faq') {
                 schema.mainEntity = extractFAQ();
+            } else if (pageType === 'howto') {
+                schema.step = extractHowToSteps();
+            } else if (pageType === 'breadcrumb') {
+                schema.itemListElement = extractBreadcrumbs();
             }
 
-            // Replace placeholders
-            schema = replacePlaceholders(schema, pageData);
-            const orgSchema = replacePlaceholders(organizationSchema, { ...pageData, sameAs: JSON.stringify(config.socialLinks) });
-            const localSchema = replacePlaceholders(localBusinessSchema, pageData);
+            // Prepare ProfessionalService schema
+            const serviceSchema = replacePlaceholders(professionalServiceSchema, pageData);
+            serviceSchema.sameAs = config.socialLinks;
+            serviceSchema.hasOfferCatalog.itemListElement = config.services.map(service => ({
+                '@type': 'Offer',
+                'itemOffered': {
+                    '@type': 'Service',
+                    'name': service.name,
+                    'description': service.description,
+                    '@id': service.id
+                }
+            }));
 
-            // Validate schemas
-            const finalSchema = [schema, orgSchema, localSchema].filter(s => validateSchema(s));
+            // Replace placeholders in main schema
+            schema = replacePlaceholders(schema, pageData);
+
+            // Combine schemas
+            const finalSchema = [schema, serviceSchema].filter(s => validateSchema(s));
+            if (pageType !== 'homepage' && pageType !== 'searchbox') {
+                finalSchema.shift(); // Include WebSite schema only for homepage or searchbox
+            }
 
             if (finalSchema.length === 0) {
                 logToRemote('No valid schemas generated', 'error');
@@ -315,7 +431,7 @@
         config = Object.assign(defaultConfig, await fetchResource(config.configUrl, {}), window.schemaConfig || {});
 
         // Load external schema templates
-        schemaMapping = Object.assign(defaultSchemaTemplates, await fetchResource(config.templateUrl, {}));
+        schemaMapping = await fetchResource(config.templateUrl, {});
 
         // Run initial injection
         if (document.readyState === 'loading') {
@@ -324,7 +440,7 @@
             requestIdleCallback(injectSchema);
         }
 
-        // Observe DOM changes for SPAs
+        // Observe DOM changes for Webflow CMS
         const observer = new MutationObserver((mutations) => {
             if (mutations.some(m => m.type === 'childList' && m.target !== document.head)) {
                 requestIdleCallback(injectSchema);
