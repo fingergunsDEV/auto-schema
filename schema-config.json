@@ -1,145 +1,91 @@
 {
-    "homepage": {
-        "@type": "WebSite",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "{brand}",
-            "url": "{siteUrl}",
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": "{siteUrl}search?query={search_term_string}",
-                "query-input": "required name=search_term_string"
-            }
-        }
+    "brand": "Holistic Growth Marketing",
+    "logoUrl": "https://cdn.prod.website-files.com/65db95957d65c02ae759f762/66fca6720ecaf4e682af0a99_blue%20logo%20new.avif",
+    "siteUrl": "https://www.holisticgrowthmarketing.com/",
+    "configUrl": "https://fingergunsdev.github.io/auto-schema/schema-config.json",
+    "templateUrl": "https://fingergunsdev.github.io/auto-schema/schema-templates.json",
+    "socialLinks": [
+        "https://www.facebook.com/holisticgrowthmarketing",
+        "https://twitter.com/localseogrowth",
+        "https://www.linkedin.com/company/holistic-growth-marketing",
+        "https://www.instagram.com/holisticgrowthmarketingla",
+        "https://www.yelp.com/biz/holistic-growth-marketing-los-angeles",
+        "https://www.reddit.com/user/InstructionAny1236/",
+        "https://medium.com/@holisticgrowthmarketing",
+        "https://podcasters.spotify.com/pod/show/holisticgrowthmarketing",
+        "https://www.iheart.com/podcast/269-holistic-marketing-minute-255521927/"
+    ],
+    "address": {
+        "streetAddress": "215 Market St",
+        "addressLocality": "Venice",
+        "addressRegion": "CA",
+        "postalCode": "90291",
+        "addressCountry": "US"
     },
-    "service": {
-        "@type": "Service",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "{title}",
-            "description": "{metaDescription}",
-            "provider": {
-                "@type": "ProfessionalService",
-                "name": "{brand}",
-                "url": "{siteUrl}",
-                "image": "{logoUrl}",
-                "@id": "{siteUrl}#professionalService"
-            },
-            "serviceType": "{serviceType}",
-            "@id": "{pageUrl}#{serviceId}"
-        }
+    "geo": {
+        "latitude": 33.9869,
+        "longitude": -118.4663
     },
-    "location": {
-        "@type": "Place",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "Place",
-            "name": "{brand} - Venice Location",
-            "address": {
-                "@type": "PostalAddress",
-                "streetAddress": "{streetAddress}",
-                "addressLocality": "{addressLocality}",
-                "addressRegion": "{addressRegion}",
-                "postalCode": "{postalCode}",
-                "addressCountry": "{addressCountry}"
-            },
-            "geo": {
-                "@type": "GeoCoordinates",
-                "latitude": "{latitude}",
-                "longitude": "{longitude}"
-            },
-            "telephone": "{telephone}",
-            "openingHoursSpecification": [
-                {
-                    "@type": "OpeningHoursSpecification",
-                    "dayOfWeek": "{openingHoursDayOfWeek}",
-                    "opens": "{openingHoursOpens}",
-                    "closes": "{openingHoursCloses}"
-                }
-            ]
+    "telephone": "+1-323-902-1031",
+    "openingHours": [
+        {
+            "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "opens": "08:00",
+            "closes": "17:00"
         }
-    },
-    "about": {
-        "@type": "WebPage",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "{title}",
-            "description": "{metaDescription}",
-            "url": "{pageUrl}",
-            "mainEntity": {
-                "@type": "Organization",
-                "name": "{brand}",
-                "description": "{metaDescription}",
-                "url": "{siteUrl}",
-                "logo": "{logoUrl}",
-                "sameAs": "{socialLinks}"
-            }
+    ],
+    "description": "Unlock the full potential of your business by combining holistic SEO with cutting-edge business intelligence automation, data analysis, brand storytelling, and targeted content marketing.",
+    "areaServed": "Global",
+    "services": [
+        {
+            "name": "On-page SEO",
+            "description": "Optimize your website's content and structure for better search engine rankings.",
+            "id": "https://www.holisticgrowthmarketing.com/services/on-page-seo#onPageSEO"
+        },
+        {
+            "name": "Off-page SEO",
+            "description": "Build your online authority through quality backlinks and external signals.",
+            "id": "https://www.holisticgrowthmarketing.com/services/off-page-seo#offPageSEO"
+        },
+        {
+            "name": "Technical SEO",
+            "description": "Enhance the technical aspects of your website to improve its search engine performance.",
+            "id": "https://www.holisticgrowthmarketing.com/services/technical-seo#technicalSEO"
+        },
+        {
+            "name": "Keyword Research",
+            "description": "Identify the most valuable keywords for targeting in your SEO strategy.",
+            "id": "https://www.holisticgrowthmarketing.com/services/keyword-research#keywordResearch"
+        },
+        {
+            "name": "Web Design",
+            "description": "Create visually appealing and user-friendly website designs that engage visitors.",
+            "id": "https://www.holisticgrowthmarketing.com/services/web-design#webDesign"
+        },
+        {
+            "name": "Web Development",
+            "description": "Build responsive and high-performance websites tailored to your business needs.",
+            "id": "https://www.holisticgrowthmarketing.com/services/web-development#webDevelopment"
+        },
+        {
+            "name": "SEO Reporting",
+            "description": "Get detailed insights and analytics on your SEO performance.",
+            "id": "https://www.holisticgrowthmarketing.com/services/seo-reporting#seoReporting"
+        },
+        {
+            "name": "Trend Forecasting",
+            "description": "Anticipate market trends and adapt your SEO strategy for future success.",
+            "id": "https://www.holisticgrowthmarketing.com/services/trend-forecasting#trendForecasting"
+        },
+        {
+            "name": "Local SEO",
+            "description": "Optimize your online presence to attract local customers and improve local search rankings.",
+            "id": "https://www.holisticgrowthmarketing.com/services/local-seo#localSEO"
         }
-    },
-    "article": {
-        "@type": "Article",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            "headline": "{title}",
-            "description": "{metaDescription}",
-            "datePublished": "{datePublished}",
-            "dateModified": "{dateModified}",
-            "author": {
-                "@type": "Organization",
-                "name": "{brand}"
-            },
-            "publisher": {
-                "@type": "Organization",
-                "name": "{brand}",
-                "logo": {
-                    "@type": "ImageObject",
-                    "url": "{logoUrl}"
-                }
-            },
-            "url": "{pageUrl}"
-        }
-    },
-    "faq": {
-        "@type": "FAQPage",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "mainEntity": []
-        }
-    },
-    "howto": {
-        "@type": "HowTo",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "HowTo",
-            "name": "{title}",
-            "description": "{metaDescription}",
-            "step": []
-        }
-    },
-    "searchbox": {
-        "@type": "WebSite",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "url": "{siteUrl}",
-            "potentialAction": {
-                "@type": "SearchAction",
-                "target": "{siteUrl}search?query={search_term_string}",
-                "query-input": "required name=search_term_string"
-            }
-        }
-    },
-    "breadcrumb": {
-        "@type": "BreadcrumbList",
-        "template": {
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": []
-        }
-    }
+    ],
+    "faqSelectors": [".faq-item h4", ".question"],
+    "howToSelectors": [".howto-step h3", ".step-title"],
+    "breadcrumbSelectors": [".breadcrumb-item a", ".w-breadcrumb a"],
+    "debug": true,
+    "remoteLogUrl": null
 }
