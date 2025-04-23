@@ -151,19 +151,41 @@
         }
     }
 
+    // Utility to sanitize strings for JSON
+    function sanitizeString(value) {
+        if (typeof value !== 'string') return value;
+        return value
+            .replace(/"/g, '\\"') // Escape double quotes
+            .replace(/\n/g, ' ') // Replace newlines with spaces
+            .replace(/\t/g, ' ') // Replace tabs with spaces
+            .trim();
+    }
+
     // Utility to replace placeholders in schema
     function replacePlaceholders(schema, data) {
-        const schemaString = JSON.stringify(schema);
-        let replaced = schemaString;
-        for (const [key, value] of Object.entries(data)) {
-            replaced = replaced.replace(new RegExp(`{${key}}`, 'g'), value || '');
+        const schemaCopy = JSON.parse(JSON.stringify(schema)); // Deep copy
+        function replaceInObject(obj) {
+            for (const key in obj) {
+                if (typeof obj[key] === 'string') {
+                    let value = obj[key];
+                    for (const [dataKey, dataValue] of Object.entries(data)) {
+                        if (value.includes(`{${dataKey}}`)) {
+                            if (dataKey === 'socialLinks' || dataKey === 'openingHoursDayOfWeek') {
+                                // Handle arrays directly
+                                value = dataValue;
+                            } else {
+                                value = value.replace(new RegExp(`{${dataKey}}`, 'g'), sanitizeString(dataValue));
+                            }
+                        }
+                    }
+                    obj[key] = value;
+                } else if (typeof obj[key] === 'object' && obj[key] !== null) {
+                    replaceInObject(obj[key]);
+                }
+            }
         }
-        try {
-            return JSON.parse(replaced);
-        } catch (e) {
-            console.error('Error parsing schema:', e);
-            return {};
-        }
+        replaceInObject(schemaCopy);
+        return schemaCopy;
     }
 
     // Basic schema validation
@@ -221,6 +243,11 @@
                 test: () => window.location.pathname.includes('/about'),
                 weight: 0.9,
                 type: () => 'about'
+            },
+            {
+                test: () => window.location.pathname.includes('/guide') || window.location.pathname.includes('/resource') || document.body.innerText.toLowerCase().includes('pillar'),
+                weight: 0.8,
+                type: () => 'pillar'
             },
             {
                 test: () => window.location.pathname === '/' || window.location.pathname === '/index.html',
@@ -291,164 +318,4 @@
     }
 
     // Extract HowTo steps
-    function extractHowToSteps() {
-        const steps = [];
-        const selectors = config.howToSelectors || [];
-        const elements = document.querySelectorAll(selectors.join(', '));
-
-        elements.forEach((step, index) => {
-            const description = step.nextElementSibling?.textContent.trim() || '';
-            if (description) {
-                steps.push({
-                    '@type': 'HowToStep',
-                    'name': step.textContent.trim(),
-                    'text': description,
-                    'position': index + 1
-                });
-            }
-        });
-
-        return steps;
-    }
-
-    // Extract Breadcrumbs
-    function extractBreadcrumbs() {
-        const breadcrumbs = [];
-        const selectors = config.breadcrumbSelectors || [];
-        const elements = document.querySelectorAll(selectors.join(', '));
-
-        elements.forEach((item, index) => {
-            const name = item.textContent.trim();
-            const url = item.href || '';
-            if (name && url) {
-                breadcrumbs.push({
-                    '@type': 'ListItem',
-                    'position': index + 1,
-                    'name': name,
-                    'item': url
-                });
-            }
-        });
-
-        return breadcrumbs;
-    }
-
-    // Main function to generate and inject schema
-    async function injectSchema() {
-        try {
-            // Gather page data
-            const pageData = {
-                title: document.title || 'Holistic Growth Marketing',
-                metaDescription: document.querySelector('meta[name="description"]')?.content || config.description,
-                datePublished: document.querySelector('meta[name="article:published_time"]')?.content || new Date().toISOString(),
-                dateModified: document.querySelector('meta[name="article:modified_time"]')?.content || new Date().toISOString(),
-                brand: config.brand,
-                siteUrl: config.siteUrl,
-                pageUrl: window.location.href,
-                logoUrl: config.logoUrl,
-                description: config.description,
-                telephone: config.telephone,
-                streetAddress: config.address.streetAddress,
-                addressLocality: config.address.addressLocality,
-                addressRegion: config.address.addressRegion,
-                postalCode: config.address.postalCode,
-                addressCountry: config.address.addressCountry,
-                latitude: config.geo.latitude,
-                longitude: config.geo.longitude,
-                openingHoursDayOfWeek: JSON.stringify(config.openingHours[0].dayOfWeek),
-                openingHoursOpens: config.openingHours[0].opens,
-                openingHoursCloses: config.openingHours[0].closes,
-                areaServed: config.areaServed,
-                socialLinks: JSON.stringify(config.socialLinks),
-                serviceType: document.querySelector('meta[name="service-type"]')?.content || '',
-                serviceId: document.querySelector('meta[name="service-id"]')?.content || window.location.hash || 'service'
-            };
-
-            // Detect page type
-            const pageType = detectPageType();
-            let schema = schemaMapping[pageType]?.template;
-
-            if (!schema) {
-                logToRemote(`No schema template for page type: ${pageType}`, 'warn');
-                return;
-            }
-
-            // Handle specific page types
-            if (pageType === 'faq') {
-                schema.mainEntity = extractFAQ();
-            } else if (pageType === 'howto') {
-                schema.step = extractHowToSteps();
-            } else if (pageType === 'breadcrumb') {
-                schema.itemListElement = extractBreadcrumbs();
-            }
-
-            // Prepare ProfessionalService schema
-            const serviceSchema = replacePlaceholders(professionalServiceSchema, pageData);
-            serviceSchema.sameAs = config.socialLinks;
-            serviceSchema.hasOfferCatalog.itemListElement = config.services.map(service => ({
-                '@type': 'Offer',
-                'itemOffered': {
-                    '@type': 'Service',
-                    'name': service.name,
-                    'description': service.description,
-                    '@id': service.id
-                }
-            }));
-
-            // Replace placeholders in main schema
-            schema = replacePlaceholders(schema, pageData);
-
-            // Combine schemas
-            const finalSchema = [schema, serviceSchema].filter(s => validateSchema(s));
-            if (pageType !== 'homepage' && pageType !== 'searchbox') {
-                finalSchema.shift(); // Include WebSite schema only for homepage or searchbox
-            }
-
-            if (finalSchema.length === 0) {
-                logToRemote('No valid schemas generated', 'error');
-                return;
-            }
-
-            // Remove existing schema to avoid duplicates
-            document.querySelectorAll('script[data-schema-injector]').forEach(script => script.remove());
-
-            // Inject schema
-            const scriptTag = document.createElement('script');
-            scriptTag.type = 'application/ld+json';
-            scriptTag.dataset.schemaInjector = 'true';
-            scriptTag.textContent = JSON.stringify(finalSchema, null, 2);
-            document.head.appendChild(scriptTag);
-
-            logToRemote('Schema injected successfully for page type: ' + pageType);
-        } catch (e) {
-            logToRemote('Error injecting schema: ' + e.message, 'error');
-        }
-    }
-
-    // Initialize and handle dynamic content
-    async function initialize() {
-        // Load external configuration
-        config = Object.assign(defaultConfig, await fetchResource(config.configUrl, {}), window.schemaConfig || {});
-
-        // Load external schema templates
-        schemaMapping = await fetchResource(config.templateUrl, {});
-
-        // Run initial injection
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => requestIdleCallback(injectSchema));
-        } else {
-            requestIdleCallback(injectSchema);
-        }
-
-        // Observe DOM changes for Webflow CMS
-        const observer = new MutationObserver((mutations) => {
-            if (mutations.some(m => m.type === 'childList' && m.target !== document.head)) {
-                requestIdleCallback(injectSchema);
-            }
-        });
-        observer.observe(document.body, { childList: true, subtree: true });
-    }
-
-    // Start initialization
-    initialize();
-})();
+    function extractHowTo
